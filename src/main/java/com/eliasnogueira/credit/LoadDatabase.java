@@ -26,9 +26,11 @@ package com.eliasnogueira.credit;
 
 import com.eliasnogueira.credit.entity.Restriction;
 import com.eliasnogueira.credit.entity.Simulation;
+import com.eliasnogueira.credit.entity.TestUser;
 import com.eliasnogueira.credit.entity.Type;
 import com.eliasnogueira.credit.repository.RestrictionRepository;
 import com.eliasnogueira.credit.repository.SimulationRepository;
+import com.eliasnogueira.credit.repository.UserRepository;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -60,12 +62,14 @@ public class LoadDatabase {
     }
 
     @Bean
-    CommandLineRunner initRestrictionDatabase(SimulationRepository simulationRepository) {
+    CommandLineRunner initRestrictionDatabase(SimulationRepository simulationRepository, UserRepository userRepository) {
         return args -> {
             simulationRepository.save(Simulation.builder().cpf("66414919004").name("Tom").email("tom@gmail.com")
                     .amount(new BigDecimal(11000)).installments(3).insurance(true).build());
             simulationRepository.save(Simulation.builder().cpf("17822386034").name("John").email("john@gmail.com")
                     .amount(new BigDecimal(20000)).installments(5).insurance(false).build());
+            userRepository.save(TestUser.builder().username("wsy").nickname("player").email("wsy@qq.com").build());
+            userRepository.save(TestUser.builder().username("ljl").nickname("player2").email("ljl@qq.com").build());
         };
     }
 }
